@@ -37,15 +37,24 @@ import Utils
 -- Just False
 
 -- | Chain verification
+-- >>> tx1 = Tx{txFrom = hash "Alice", txTo = hash "Bob", txAmount = 1 * coin}
+-- >>> block0 = mineBlock (hash "Satoshi") 0 []
+-- >>> genesis = block0
+-- >>> block1 = mineBlock (hash "Alice") (hash genesis) []
+-- >>> block2 = mineBlock (hash "Charlie") (hash block1) [tx1]
+-- >>> chain = [block2, block1, genesis]
 -- >>> verifyChain [block1, block2]
 -- Nothing
 --
--- >>> VH <$> verifyChain [block2,block1,block0]
+-- >>> VH <$> verifyChain [block2, block1, block0]
 -- Just 0x0dbea380
 
 -- | Transaction Receipts
+-- >>> tx1 = Tx{txFrom = hash "Alice", txTo = hash "Bob", txAmount = 1 * coin}
+-- >>> genesis = mineBlock (hash "Satoshi") 0 []
+-- >>> block1 = mineBlock (hash "Alice") (hash genesis) []
 -- >>> charlie = hash "Charlie"
--- >>> let (block, [receipt]) = mineTransactions charlie (hash block1) [tx1]
+-- >>> (block, [receipt]) = mineTransactions charlie (hash block1) [tx1]
 -- >>> block
 -- BlockHeader {parent = 797158976, coinbase = Tx {txFrom = 0, txTo = 1392748814, txAmount = 50000}, txroot = 2327748117, nonce = 3}
 -- Tx {txFrom = 2030195168, txTo = 2969638661, txAmount = 1000}
@@ -57,6 +66,10 @@ import Utils
 -- True
 
 -- | Pretty printing
+-- >>> tx1 = Tx{txFrom = hash "Alice", txTo = hash "Bob", txAmount = 1 * coin}
+-- >>> block0 = mineBlock (hash "Satoshi") 0 []
+-- >>> block1 = mineBlock (hash "Alice") (hash block0) []
+-- >>> block2 = mineBlock (hash "Charlie") (hash block1) [tx1]
 -- >>> runShows $ pprBlock block2
 -- hash: 0x0dbea380
 -- parent: 0x2f83ae40
