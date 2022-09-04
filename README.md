@@ -4,12 +4,6 @@
 
 <br>
 
-# 🗿 Description 🗿
-
-Blockchain module written in Haskell.
-
-<br>
-
 # ▶️ Usage ▶️
 
 ```
